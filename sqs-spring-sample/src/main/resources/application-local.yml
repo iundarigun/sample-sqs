@@ -1,0 +1,3 @@
+aws:
+  localstack: true
+  local-url: http://localhost:4566
