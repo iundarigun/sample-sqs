@@ -18,6 +18,7 @@ repositories {
 val springCloudVersion = "2020.0.3"
 val awsCloudVersion = "2.3.1"
 val swaggerVersion = "3.0.0"
+val braveInstrumentationAWSSQSVersion = "0.23.2"
 
 dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -26,9 +27,11 @@ dependencies {
 
 	implementation("org.springframework.boot:spring-boot-starter-web")
 
-	implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
 	implementation("io.awspring.cloud:spring-cloud-starter-aws")
 	implementation("io.awspring.cloud:spring-cloud-aws-messaging")
+
+	implementation("io.zipkin.aws:brave-instrumentation-aws-java-sdk-sqs:$braveInstrumentationAWSSQSVersion")
+	implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
 
 	// Swagger
 	implementation("io.springfox:springfox-boot-starter:$swaggerVersion")
