@@ -5,7 +5,7 @@ import com.amazonaws.services.sns.AmazonSNS
 import com.amazonaws.services.sns.model.SetSubscriptionAttributesRequest
 import com.amazonaws.services.sns.util.Topics
 import com.amazonaws.services.sqs.AmazonSQS
-import io.awspring.cloud.messaging.core.NotificationMessagingTemplate
+import org.springframework.cloud.aws.messaging.core.NotificationMessagingTemplate
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

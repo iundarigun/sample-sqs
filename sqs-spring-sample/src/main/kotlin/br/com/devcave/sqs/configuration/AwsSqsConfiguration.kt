@@ -8,23 +8,22 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider
 import com.amazonaws.services.sqs.AmazonSQSAsync
 import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder
 import com.amazonaws.services.sqs.model.CreateQueueRequest
-import io.awspring.cloud.autoconfigure.context.properties.AwsCredentialsProperties
-import io.awspring.cloud.messaging.core.QueueMessagingTemplate
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.LoggerFactory
+import org.springframework.cloud.aws.autoconfigure.context.properties.AwsCredentialsProperties
+import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.messaging.converter.MappingJackson2MessageConverter
+import org.springframework.messaging.converter.MessageConverter
 
 @Configuration
-class AwsSqsConfiguration(
-    private val tracing: Tracing
-) {
+class AwsSqsConfiguration {
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    // This bean can be remove if don't need add traceid to message
     @Bean
     fun amazonSQS(awsCredentialsProperties: AwsCredentialsProperties): AmazonSQSAsync {
-        val sqsMessageTracing = SqsMessageTracing.create(tracing)
-
+        val sqsMessageTracing = SqsMessageTracing.create(Tracing.current())
         return AmazonSQSAsyncClientBuilder.standard()
             .withRequestHandlers(sqsMessageTracing.requestHandler())
             .withCredentials(
@@ -45,6 +44,13 @@ class AwsSqsConfiguration(
     @Bean
     fun queueMessagingTemplate(amazonSQS: AmazonSQSAsync): QueueMessagingTemplate {
         return QueueMessagingTemplate(amazonSQS)
+    }
+
+    @Bean
+    fun messageConverter(objectMapper: ObjectMapper): MessageConverter {
+        return MappingJackson2MessageConverter().also {
+            it.objectMapper = objectMapper
+        }
     }
 
     @Bean

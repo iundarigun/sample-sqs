@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "2.5.3"
+	id("org.springframework.boot") version "2.3.12.RELEASE"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	kotlin("jvm") version "1.5.21"
 	kotlin("plugin.spring") version "1.5.21"
@@ -15,7 +15,7 @@ repositories {
 	mavenCentral()
 }
 
-val springCloudVersion = "2020.0.3"
+val springCloudVersion = "Hoxton.SR12"
 val awsCloudVersion = "2.3.1"
 val swaggerVersion = "3.0.0"
 val braveInstrumentationAWSSQSVersion = "0.23.2"
@@ -27,8 +27,8 @@ dependencies {
 
 	implementation("org.springframework.boot:spring-boot-starter-web")
 
-	implementation("io.awspring.cloud:spring-cloud-starter-aws")
-	implementation("io.awspring.cloud:spring-cloud-aws-messaging")
+	implementation("org.springframework.cloud:spring-cloud-starter-aws")
+	implementation("org.springframework.cloud:spring-cloud-aws-messaging")
 
 	implementation("io.zipkin.aws:brave-instrumentation-aws-java-sdk-sqs:$braveInstrumentationAWSSQSVersion")
 	implementation("org.springframework.cloud:spring-cloud-starter-sleuth")
@@ -41,7 +41,7 @@ dependencies {
 dependencyManagement {
 	imports {
 		mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
-		mavenBom("io.awspring.cloud:spring-cloud-aws-dependencies:$awsCloudVersion")
+//		mavenBom("io.awspring.cloud:spring-cloud-aws-dependencies:$awsCloudVersion")
 	}
 }
 
